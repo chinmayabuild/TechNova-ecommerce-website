@@ -31,7 +31,7 @@ const ProductCard = ({
           </div>
           <span> ₹{price} </span>
         </div>
-        <LinkButton  to ={'/product/id'}  text="View Product" />
+        <LinkButton  to ={'/product'}  text="View Product" />
       </div>
     </div>
   );

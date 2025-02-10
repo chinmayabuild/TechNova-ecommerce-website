@@ -6,6 +6,12 @@ import Footer from './component/footer/Footer'
 import SignUp from "./component/auth/SignUp";
 import { LogIn } from "lucide-react";
 import Login from "./component/auth/Login"
+import Product from "./component/productPage/Product";
+import Checkout from "./component/productPage/Checkout";
+import AdminLogin from "./component/auth/AdminLogin"; 
+
+
+
 export default function App() {
   const router = createBrowserRouter([
     {
@@ -38,8 +44,35 @@ export default function App() {
         </>
       ),
     },
-
-  ]);
+    {
+      path: "/product",
+      element: (
+        <>
+          <Navbar />
+          <Product />
+          <Footer/>
+        </>
+      ),
+    },
+    {
+      path: "/checkout",
+      element: (
+        <>
+          <Navbar />
+          <Checkout />
+          <Footer/>
+        </>
+      )},
+      {
+        path: "/admin/login",
+        element: (
+          <>
+            <Navbar />
+            <AdminLogin/>
+            <Footer/>
+          </>
+        ),
+    } ]);
 
   return (
     <>
