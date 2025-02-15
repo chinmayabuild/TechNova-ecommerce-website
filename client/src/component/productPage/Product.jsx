@@ -33,7 +33,7 @@ const Product = () => {
   const [pincode, setPincode] = useState(" ");
   const [availibilityMessage, setAvailibilityMessage] = useState(" ");
   const [purchaseProduct, setPurchaseProduct] = useState(false);
-    const[address, setAddress] =useState('');
+  const [address, setAddress] = useState("");
   return (
     <div className="">
       <main className="w-[93vw] lg:w-[70vw]  flex  flex-col sm:flex-row justify-start items-start gap-10 mx-auto  my-10">
@@ -152,24 +152,24 @@ const Product = () => {
               <p className=" text-sm px-2 ">{availibilityMessage}</p>
             </div>
             <div className="flex gap-3 w-fit">
-              <Button onClick={() => setPurchaseProduct(true)}>
-                Buy Now
-              </Button>
+              <Button onClick={() => setPurchaseProduct(true)}>Buy Now</Button>
               <Button> Add to Cart </Button>
             </div>
             {purchaseProduct && (
-            <div className="my-2 space-2 " >
-                <Input placeholder="Enter Your Address Here.." onChange= {(e) =>setAddress(e.target.value)} />
+              <div className="my-2 space-2 ">
+                <Input
+                  placeholder="Enter Your Address Here.."
+                  onChange={(e) => setAddress(e.target.value)}
+                />
                 <Button>Confirm Order</Button>
-            </div>)}
+              </div>
+            )}
           </div>
         </div>
       </main>
-    {/* Review Section */}
-    <hr className="my-2" />
-    <ReviewsComponent/>
-
-
+      {/* Review Section */}
+      <hr className="my-2" />
+      <ReviewsComponent />
     </div>
   );
 };

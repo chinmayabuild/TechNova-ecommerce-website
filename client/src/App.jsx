@@ -19,7 +19,8 @@ import AllProducts from "./component/admin-layouts/AllProducts";
 import Analytics from "./component/admin-layouts/Analytics";
 import Orders from "./component/admin-layouts/Orders";
 import Settings from "./component/admin-layouts/Settings";
-
+import {store} from "./redux/store"
+import { Provider } from "@radix-ui/react-tooltip";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -109,7 +110,11 @@ export default function App() {
   return (
     <>
       <ThemeProvider>
+        <Provider store={store}>
         <RouterProvider router={router} />
+        </Provider>
+
+
       </ThemeProvider>
     </>
   );

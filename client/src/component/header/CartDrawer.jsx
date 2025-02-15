@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from '../ui/button';
 import {
+  
     Drawer,
     DrawerClose,
     DrawerContent,
@@ -10,9 +11,10 @@ import {
     DrawerTitle,
     DrawerTrigger,
   } from "../ui/drawer";
+
 import { ShoppingCart } from 'lucide-react';
 import { Badge } from '../ui/badge';
-  
+
 
 const CartDrawer = () => {
 
@@ -60,4 +62,4 @@ const totalPrice = 0;
   )
 }
 
-export default CartDrawer
+export default CartDrawer;

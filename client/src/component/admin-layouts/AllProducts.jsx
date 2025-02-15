@@ -11,14 +11,22 @@ import {
 } from "../ui/select";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
+import { Textarea } from "../ui/textarea";
 
 const AllProducts = () => {
   return (
-    <div className="mx-auto px-4   sm:px-8 -z-10">
+    <div className="mx-auto px-4 sm:px-8 -z-10">
       <h1 className="text-3xl font-bolt mb-8">Our Products</h1>
 
       <div className="mb-8">
-        <form action="" className="flex gap-4 items-end sm:w-[78vw] ">
+        <form action="" className="flex gap-4 items-end sm:w-[78vw]">
           <div className="flex-1">
             <label
               htmlFor="search"
@@ -55,11 +63,8 @@ const AllProducts = () => {
 
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
-
                 <SelectItem value="headset">Headset</SelectItem>
-
                 <SelectItem value="keyboard">Keyboard</SelectItem>
-
                 <SelectItem value="mouse">Mouse</SelectItem>
               </SelectContent>
             </Select>
@@ -67,7 +72,7 @@ const AllProducts = () => {
         </form>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-6 mx-2 sm:mx-0">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mx-2 sm:mx-0">
         <Card className="flex flex-col">
           {/* Image Section */}
           <div className="aspect-square relative">
@@ -84,20 +89,65 @@ const AllProducts = () => {
             <p className="text-sm text-gray-300">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </p>
-            <p className="text-lg  font-bold text-gray-400">₹564.00</p>
+            <p className="text-lg font-bold text-gray-400">₹564.00</p>
           </CardContent>
 
           <CardFooter className="p-4 pt-0 flex justify-between">
             <Button variant="outline">
               <Edit className="mr-2 h-4" /> Edit
             </Button>
-            <Button >Blacklist Product</Button>
+            <Button>Blacklist Product</Button>
           </CardFooter>
         </Card>
       </div>
 
+      <Dialog>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Edit Product</DialogTitle>
+          </DialogHeader>
+          <form>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-4 items-center">
+                <Label htmlFor="name">Name</Label>
+                <Input type="text" id="name" name="name" />
+              </div>
+              <div className="grid gap-4 py-4">
+                <div className="grid gap-4 items-center">
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea id="description" name="description" />
+                </div>
+              </div>
+              <div className="grid gap-4 py-4">
+                <div className="grid gap-4 items-center">
+                  <Label htmlFor="price">Price</Label>
+                  <Input type="number" id="price" name="price" />
+                </div>
+              </div>
+              <div className="grid gap-4 py-4">
+                <div className="grid gap-4 items-center">
+                  <Label htmlFor="category">Category</Label>
+                  <Select name="category">
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="headset">Headset</SelectItem>
+                      <SelectItem value="keyboard">Keyboard</SelectItem>
+                      <SelectItem value="mouse">Mouse</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit">Save Changes</Button>
 
-      
+            </DialogFooter>
+
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
