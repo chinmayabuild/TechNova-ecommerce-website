@@ -7,7 +7,7 @@ const signup = async (req, res) => {
   const { name, email, password, phone } = req.body;
 
   try {
-    // ✅ Fix: Use findOne() instead of findone()
+    
     let user = await User.findOne({ email });
 
     if (user) {

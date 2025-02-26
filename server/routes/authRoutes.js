@@ -7,12 +7,12 @@ const {
 
 const router = require("express").Router();
 
+// User Routes
 router.post("/signup", signup);
-
 router.post("/login", login);
 
+// Admin Routes
 router.post("/admin-signup", adminSignup);
-
 router.post("/admin-login", adminLogin);
 
 

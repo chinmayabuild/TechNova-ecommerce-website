@@ -2,10 +2,10 @@ const Pincode = require("../models/Pincode");
 const {ROLES}  = require("../utils/constants");
 
 const addPincode = async (req, res) => {
-  // ✅ Fix: Correct the variable name `res` instead of `result`
+
   if (req.role !== ROLES.admin) {
     return res.status(401).json({
-      success: false, // ✅ Fix spelling
+      success: false,
       message: "Access denied",
     });
   }
@@ -50,4 +50,30 @@ const addPincode = async (req, res) => {
   }
 };
 
-module.exports = { addPincode };
+const getPincode = async (req, res) => {
+  const { pincode } = req.params; // Corrected destructuring
+
+  try {
+    const existingPincode = await Pincode.find({ pincode }); // Corrected await syntax
+
+    if (existingPincode.length === 0) { // Corrected condition
+      return res.status(404).json({
+        success: false,
+        message: "No delivery available for this product",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Delivery available",
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+module.exports = { addPincode,getPincode };
