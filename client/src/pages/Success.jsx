@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
 
-const Sucess = () => {
+const Success = () => {
     const[count, setCount] = useState(3);
 
 
@@ -31,4 +31,4 @@ const Sucess = () => {
   )
 }
 
-export default Sucess
+export default Success

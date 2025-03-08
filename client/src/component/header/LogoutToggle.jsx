@@ -2,30 +2,41 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Link, useNavigate } from "react-router-dom"; 
+import { useDispatch } from "react-redux";
+import { setUserLogout } from "@/redux/slices/authSlice";
 
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Link } from "react-router-dom";
+const LogoutToggle = ({ user }) => { 
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); 
 
-const LogutToggle = () => {
+  const handleLogout = () => {
+    dispatch(setUserLogout());
+    localStorage.removeItem("auth"); // Clear stored auth data
+    navigate("/login"); // Redirect to login after logout
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar className=" cursor-pointer">
-          {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
-          <AvatarFallback className="text-xl" >CD</AvatarFallback>
+        <Avatar className="cursor-pointer">
+          <AvatarFallback className="text-xl">
+            <img src="" alt="" />
+            {user?.name ? user.name.charAt(0).toUpperCase() : "?"}
+          </AvatarFallback>
         </Avatar>
-      </DropdownMenuTrigger >
-      <DropdownMenuContent>
-        <DropdownMenuItem>Logout</DropdownMenuItem>
-       <Link to ='/orders'>
-        <DropdownMenuItem>orders</DropdownMenuItem>
-        </Link>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate("/orders")}>
+          Orders
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
 };
-export default LogutToggle;
+
+export default LogoutToggle;

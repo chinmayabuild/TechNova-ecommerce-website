@@ -7,9 +7,14 @@ import { starGenerator } from "../constants/Helper";
 const Review = () => {
   return (
     <div className="my-10  sm:my-15 w-[93vw] lg:w-[70vw] mx-auto ">
-      <h3 className="font-extrabold text-2xl text-gray-800 dark:text-white mb-8 text-center">
-        Reviews
-      </h3>
+
+<h3 className="flex items-center gap-3 font-extrabold text-2xl text-gray-800 dark:text-white mb-8 text-center">
+  <hr className="flex-grow border-t-2 border-zinc-600" />
+  <span>Reviews</span>
+  <hr className="flex-grow border-t-2 border-zinc-600" />
+</h3>
+
+
 
       {/* Write reviw section */}
       <div className="rounded-lg">

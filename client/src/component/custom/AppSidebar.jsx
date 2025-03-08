@@ -26,6 +26,9 @@ import {
 } from "../ui/sidebar";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
+import { setUserLogout } from "@/redux/slices/authSlice";
+import { useDispatch } from "react-redux";
+
 
 // Menu items.
 const items = [
@@ -58,6 +61,9 @@ const items = [
 
 const AppSidebar = () => {
 
+    const dispatch = useDispatch();
+  
+
 
     const {pathname}  = useLocation();
     
@@ -85,7 +91,7 @@ const AppSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <Button>Logout</Button>
+        <Button onClick ={() =>dispatch(setUserLogout())} >Logout</Button>
       </SidebarFooter>
     </Sidebar>
   );

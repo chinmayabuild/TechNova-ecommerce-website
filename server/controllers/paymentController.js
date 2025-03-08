@@ -1,5 +1,5 @@
 const Razorpay = require("razorpay");
-const crypto = require("crypto"); // Added import
+const crypto = require("crypto");
 const User = require("../models/User");
 const Product = require("../models/Product");
 const Order = require("../models/Order");
@@ -29,7 +29,7 @@ const generatePayment = async (req, res) => {
     }
 
     const options = {
-      amount: amount * 100, // Convert to paise
+      amount: amount, 
       currency: "INR",
       receipt: Math.random().toString(36).substring(2),
     };
@@ -40,6 +40,7 @@ const generatePayment = async (req, res) => {
       data: { ...order, name: user.name },
     });
   } catch (error) {
+    console.error("Generate Payment Error:", error);
     return res.status(500).json({ success: false, message: error.message });
   }
 };

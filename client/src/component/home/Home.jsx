@@ -4,6 +4,8 @@ import FilterMenu from "./FilterMenu";
 import ProductList from "../productPage/ProductList"
 
 const Home = () => {
+
+  
   return (
     <div>
      <HeaderDisplay/>
@@ -14,4 +16,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;

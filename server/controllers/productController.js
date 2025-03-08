@@ -103,46 +103,53 @@ const getProducts = async (req, res) => {
   try {
     let { page, limit, category, price, search } = req.query;
     page = parseInt(page) || 1;
-    limit = parseInt(limit) || 9;
+    limit = parseInt(limit) || 12;
 
     let query = {};
 
-    if (category)
-      query.category = category.charAt(0).toUpperCase() + category.slice(1);
-    if (category == "all") delete query.category;
+    if (category && category !== "all") {
+      query.category = new RegExp(`^${category}$`, "i"); // Case-insensitive match
+    }
+    
 
-    if (search) query.name = { $regex: search, $options: "i" };
+    if (search) {
+      query.name = { $regex: search, $options: "i" };
+    }
 
-    if (price > 0) query.price = { $lte: price };
+    if (price > 0) {
+      query.price = { $lte: price };
+    }
 
     const totalProducts = await Product.countDocuments(query);
     const totalPages = Math.ceil(totalProducts / limit);
 
     const products = await Product.find(query)
-  .select("name price images ratings description blacklisted")
-  .skip((page - 1) * limit)
-  .limit(limit);
+      .select("name price images ratings description blacklisted")
+      .skip((page - 1) * limit)
+      .limit(limit);
 
     let newProductsArray = [];
     products.forEach((product) => {
       const productObj = product.toObject();
-      productObj.image = productObj.images[0].url;
-      delete productObj.images;
+      productObj.image = productObj.images[0]; // First image as "image"
+      delete productObj.images; // Remove the images array
       newProductsArray.push(productObj);
     });
 
     if (!products.length) {
       return res
         .status(404)
-        .json({ success: false, message: "No Product found" });
+        .json({ success: false, message: "No products found" });
     }
+
     return res.status(200).json({
       success: true,
-      message: "Product fectched successfully",
+      message: "Products fetched successfully",
+      data: newProductsArray, // Include the products array here
       pagination: {
         totalProducts,
         totalPages,
-        currentpage: page,
+        currentPage: page, // Fixed typo: "currentpage" -> "currentPage"
         pageSize: limit,
       },
     });
@@ -150,6 +157,7 @@ const getProducts = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 const getProductByName = async (req, res) => {
   const { name } = req.params;

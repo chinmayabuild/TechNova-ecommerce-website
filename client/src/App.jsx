@@ -1,17 +1,21 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./component/home/Home";
-import Navbar from "./component/header/Navbar";
+import { Provider } from "react-redux";
+import { store, persistor } from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 import { ThemeProvider } from "./component/provider/theme-provider";
-import Footer from "./component/footer/Footer";
+import { Toaster } from "./components/ui/sonner";
+import Home from "./component/home/Home";
 import SignUp from "./component/auth/SignUp";
-import { LogIn } from "lucide-react";
 import Login from "./component/auth/Login";
 import Product from "./component/productPage/Product";
 import Checkout from "./component/productPage/Checkout";
 import AdminLogin from "./component/auth/AdminLogin";
 import Error from "./pages/Error";
-import Sucess from "./pages/Sucess";
-import { Root } from "postcss";
+import Success from "./pages/Success";
+import MyOrders from "./pages/MyOrders";
+import ProtectedRoute from "./component/custom/ProtectedRoute";
+
+// Admin Layouts
 import RootLayout from "./component/admin-layouts/RootLayout";
 import AdminLayout from "./component/admin-layouts/AdminLayout";
 import CreateProducts from "./component/admin-layouts/CreateProducts";
@@ -19,103 +23,113 @@ import AllProducts from "./component/admin-layouts/AllProducts";
 import Analytics from "./component/admin-layouts/Analytics";
 import Orders from "./component/admin-layouts/Orders";
 import Settings from "./component/admin-layouts/Settings";
-import {store} from "./redux/store"
-import { Provider } from "@radix-ui/react-tooltip";
+import ProductPage from "./pages/ProductPage";
+import LogoutToggle from "./component/header/LogoutToggle";
 
-export default function App() {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: (
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <ProtectedRoute>
         <RootLayout>
           <Home />
         </RootLayout>
-      ),
-    },
-    {
-      path: "/signup",
-      element: (
-       
-         <RootLayout children={<SignUp />} />
-        
-      ),
-    },
-    {
-      path: "/login",
-      element: (
-        <RootLayout children={<Login />} />
-      ),
-    },
-    {
-      path: "/product",
-      element: (
-        <RootLayout children={<Product />} />
-      ),
-    },
-    {
-      path: "/checkout",
-      element: (
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/signup",
+    element: <RootLayout children={<SignUp />} />,
+  },
+  {
+    path: "/login/:productName?",
+    element: <RootLayout children={<Login />} />,
+  },
+  {
+    path: "/logout",
+    element: <ProtectedRoute><RootLayout children={<LogoutToggle />} /> </ProtectedRoute>,
+  },
+  {
+    path: "/product/:productName",
+    element: <RootLayout children={<Product />} />,
+  },
+  {
+    path: "/product/page",
+    element: <RootLayout children={<ProductPage/>} />,
+  },
+  {
+    path: "/checkout",
+    element: (
+      <ProtectedRoute>
         <RootLayout children={<Checkout />} />
-      ),
-    },
-    {
-      path: "/admin/login",
-      element: (
-        <RootLayout children={<AdminLogin />} />
-      ),
-    },
-    {
-      path : "/admin/dashboard",
-      element :<AdminLayout children={<CreateProducts/>}/>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/orders",
+    element: (
+      <ProtectedRoute>
+        <RootLayout children={<MyOrders />} />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/login",
+    element: <RootLayout children={<AdminLogin />} />,
+  },
+  {
+    path: "/admin/dashboard",
+    element: (
+      <ProtectedRoute>
+        <AdminLayout children={<CreateProducts />} />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/dashboard/all-products",
+    element: (
+      <ProtectedRoute>
+        <AdminLayout children={<AllProducts />} />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/dashboard/analytics",
+    element: (
+      <ProtectedRoute>
+        <AdminLayout children={<Analytics />} />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/dashboard/orders",
+    element: (
+      <ProtectedRoute>
+        <AdminLayout children={<Orders />} />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/dashboard/settings",
+    element: (
+      <ProtectedRoute>
+        <AdminLayout children={<Settings />} />
+      </ProtectedRoute>
+    ),
+  },
+  { path: "/*", element: <Error /> },
+  { path: "/success", element: <Success /> },
+]);
 
-    },
-    {
-      path : "/admin/dashboard/all-products",
-      element :<AdminLayout children={<AllProducts/>}/>
-
-    },
-    {
-      path : "/admin/dashboard/analytics",
-      element :<AdminLayout children={<Analytics/>}/>
-
-    },
-    {
-      path : "/admin/dashboard/orders",
-      element :<AdminLayout children={<Orders/>}/>
-
-    },
-    {
-      path : "/admin/dashboard/settings",
-      element :<AdminLayout children={<Settings/>}/>
-
-    },
-    {
-      path: "/*",
-      element: (
-        <>
-          <Error/>
-        </>
-      ),
-    },  {
-      path: "/sucess",
-      element: (
-        <>
-          <Sucess/>
-        </>
-      ),
-    },
-
-  ]);
-
+export default function App() {
   return (
-    <>
-      <ThemeProvider>
-        <Provider store={store}>
+    <ThemeProvider>
+      <Toaster />
+      <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
         <RouterProvider router={router} />
-        </Provider>
-
-
-      </ThemeProvider>
-    </>
+        </PersistGate>
+      </Provider>
+    </ThemeProvider>
   );
 }

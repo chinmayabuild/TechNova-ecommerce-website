@@ -28,8 +28,7 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem
-  ;
+    --radius: 0.5rem;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -62,8 +61,7 @@
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
-  ;
+    --chart-5: 340 75% 55%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -93,3 +91,73 @@ body{
   font-style: normal;
   overflow-x: hidden;
 }
+
+
+
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.nav-link {
+  position: relative;
+  display: inline-block;
+  color: #e9660d; /* Text color */
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.nav-link span {
+  display: block;
+  position: relative;
+  transition: transform 0.4s ease-in-out;
+}
+
+.nav-link::before {
+  content: attr(data-text); /* Duplicate text */
+  position: absolute;
+  top: 100%; /* Start below */
+  left: 0;
+  width: 100%;
+  transition: transform 0.4s ease-in-out;
+  color: inherit;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #e9660d; /* Underline color */
+  transform: scaleX(0);
+  transition: transform 0.4s ease-in-out;
+  transform-origin: left;
+}
+
+.nav-link:hover span {
+  transform: translateY(-100%); /* Move original text up */
+}
+
+.nav-link:hover::before {
+  transform: translateY(-100%); /* Move new text up into place */
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1); /* Show underline */
+}
+
+.nav-link:not(:hover)::after {
+  transform: scaleX(0); /* Hide underline */
+}
+
+
+
+

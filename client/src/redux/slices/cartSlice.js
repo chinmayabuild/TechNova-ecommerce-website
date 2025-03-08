@@ -2,69 +2,56 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const cartSlice = createSlice({
   name: "cart",
-
   initialState: {
     cartItems: [],
     totalQuantity: 0,
     totalPrice: 0,
   },
-
   reducers: {
     addToCart: (state, action) => {
-      const newItem = action.payload; //action.payload represents the data sent when you dispatch an action.
+      const newItem = action.payload;
       const existingItemIndex = state.cartItems.findIndex(
         (item) => item._id === newItem._id
       );
+
+      const itemQuantity = newItem.quantity || 1; // Ensure quantity is defined
+
       if (existingItemIndex === -1) {
-        //-1 means the item not exists
         state.cartItems.push({
           ...newItem,
-          quantity: newItem.quantity,
-          totalItemPrice: newItem.quantity * newItem.price,
+          quantity: itemQuantity, // Set quantity
+          totalItemPrice: itemQuantity * newItem.price,
         });
       } else {
-        state.cartItems[existingItemIndex].quantity += newItem.quantity;
-        state.cartItems[existingItemIndex].totalprice +=
-          newItem.price * newItem.quantity;
+        state.cartItems[existingItemIndex].quantity += itemQuantity;
+        state.cartItems[existingItemIndex].totalItemPrice +=
+          newItem.price * itemQuantity;
       }
-
-      state.totalQuantity += newItem.quantity;
-
-      state.totalPrice = Number(
-        (state.totalPrice += newItem.quantity * newItem.quantity.toFixed(2)) //.toFixed(2) converts a number to a string, rounding it to 2 decimal places.
-      );
+      state.totalQuantity += itemQuantity;
+      state.totalPrice += newItem.price * itemQuantity;
     },
-
-    /* 
-    let quantity = 3.456;
-     console.log(quantity.toFixed(2));  // "3.46" (string)
-    console.log(Number(quantity.toFixed(2)));  // 3.46 (number)
-    */
 
     removeFromCart: (state, action) => {
       const itemToRemove = action.payload;
-
       const existingItemIndex = state.cartItems.findIndex(
-        (items) => items._id === itemToRemove._id
+        (item) => item._id === itemToRemove._id
       );
       if (existingItemIndex === -1) return;
 
       const existingItem = state.cartItems[existingItemIndex];
-      existingItem.quantity -= itemToRemove.quantity;
-      existingItem.totalItemPrice -= itemToRemove.price * itemToRemove.quantity;
+      const removeQuantity = itemToRemove.quantity || 1; // Default to 1 if missing
 
-      state.totalQuantity -= itemToRemove.quantity;
-      state.totalPrice = Number(
-        state.totalPrice -
-          (itemToRemove.price * itemToRemove.quantity).toFixed(2)
-      );
+      existingItem.quantity -= removeQuantity;
+      existingItem.totalItemPrice -= itemToRemove.price * removeQuantity;
+      state.totalQuantity -= removeQuantity;
+      state.totalPrice -= itemToRemove.price * removeQuantity;
 
+      // Remove item if quantity reaches zero
       if (existingItem.quantity <= 0) {
-        state.cartItems = state.cartItems.splice(existingItemIndex, 1);
+        state.cartItems.splice(existingItemIndex, 1);
       }
     },
 
-    
     emptyCart: (state) => {
       state.cartItems = [];
       state.totalQuantity = 0;

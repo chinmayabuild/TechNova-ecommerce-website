@@ -86,32 +86,45 @@ const adminSignup = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    let admin = await Admin.findOne({ username });
-
-    if (admin) {
+    // Input validation
+    if (!username || !password) {
       return res.status(400).json({
         success: false,
-        message: "Please try again with a different username",
+        message: "Username and password are required",
       });
     }
 
-    // ✅ Fix: Hashing password should be outside the `if` block
+    // Check if admin already exists
+    let admin = await Admin.findOne({ username });
+    if (admin) {
+      return res.status(400).json({
+        success: false,
+        message: "Username already exists, please try a different username",
+      });
+    }
+
+    // Hash password
     const securePassword = await bcrypt.hash(password, 10);
 
-    // ✅ Create new admin and save to the database
+    // Create new admin
     const newAdmin = new Admin({
       username,
       password: securePassword,
+      role: 'admin' // Add default role if applicable
     });
 
     await newAdmin.save();
 
     return res.status(201).json({
       success: true,
-      message: "Admin signup successfully",
+      message: "Admin signed up successfully",
     });
   } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
+    console.error("Signup Error:", error);
+    return res.status(500).json({ 
+      success: false, 
+      message: "Internal server error" 
+    });
   }
 };
 
@@ -119,36 +132,42 @@ const adminLogin = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    let admin = await Admin.findOne({ username });
-
-    if (!admin) {
-      return res
-        .status(400)
-        .json({
-          sucess: false,
-          message: "Please tyr with some different name",
-        });
+    // Input validation
+    if (!username || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Username and password are required",
+      });
     }
 
-    const comparePassword = await bcrypt.compare(password, admin.password);
-    if (!comparePassword)
-      return res
-        .status(400)
-        .json({ sucess: false, message: "Invalid Credential" });
+    // Find admin
+    const admin = await Admin.findOne({ username });
+    if (!admin) {
+      return res.status(400).json({
+        success: false, // Fixed typo 'sucess'
+        message: "Invalid username or password", // More generic message for security
+      });
+    }
 
-         // ✅ Generate JWT token
+    // Compare password
+    const isPasswordValid = await bcrypt.compare(password, admin.password);
+    if (!isPasswordValid) {
+      return res.status(400).json({
+        success: false, // Fixed typo 'sucess'
+        message: "Invalid username or password", // More generic message for security
+      });
+    }
 
+    // Generate JWT token
     const token = jwt.sign(
       { id: admin._id, role: admin.role },
       process.env.JWT_SECRET,
-      {
-        expiresIn: "1d",
-      }
+      { expiresIn: "30d" }
     );
 
     return res.status(200).json({
-      sucess: true,
-      message: "Admin logged in sucessfully",
+      success: true, // Fixed typo 'sucess'
+      message: "Admin logged in successfully", // Fixed typo 'sucessfully'
       token,
       admin: {
         id: admin._id,
@@ -157,11 +176,13 @@ const adminLogin = async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(400).json({
+    console.error("Login Error:", error);
+    return res.status(500).json({ // Changed to 500 for server error
       success: false,
-      message: "Please try again with a different username",
+      message: "Internal server error",
     });
   }
 };
 
 module.exports = { signup, login, adminSignup, adminLogin };
+
