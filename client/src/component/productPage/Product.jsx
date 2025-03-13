@@ -89,6 +89,7 @@ const Product = () => {
     if (productName) {
       fetchProductByName();
     }
+    window.scrollTo(0, 0);
   }, [productName]);
   const fallbackImages = [
     {

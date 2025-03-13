@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const { verify } = require("jsonwebtoken");
 const verifyToken = require("../middlewares/verifyToken");
 const { generatePayment, verifyPayment } = require("../controllers/paymentController");
 

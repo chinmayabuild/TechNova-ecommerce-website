@@ -8,7 +8,7 @@ amount:{
 
 },
 address:{
-    type:Number,
+    type:String,
     required:true,
 },
 razorpayPaymentID:{
@@ -32,7 +32,7 @@ products:[
         },
         color: {
             type:String,
-            required:true,
+            required:false,
         },
     }
 ],

@@ -16,11 +16,10 @@ const useRazorpay = () => {
           },
         }
       );
-      const data = res.data;
-      return data.data;
+      return res.data?.data;
     } catch (error) {
-      toast.error(error.response?.data?.message || "Payment generation failed");
-      return null;
+      toast.error(error.response?.data?.message || "Payment verification failed");
+            return null;
     }
   };
 
@@ -39,16 +38,19 @@ const useRazorpay = () => {
   };
 
   const verifyPayment = async (options, productArray, address) => {
-    const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
 
     if (!res) {
       return toast("Failed to load Razorpay");
     }
 
     const paymentObject = new window.Razorpay({
-      key: import.meta.env.RAZORPAY_KEY_ID,
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       ...options,
-      image: "https://plus.unsplash.com/premium_photo-1679513691474-73102089c117?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aGVhZHBob25lfGVufDB8fDB8fHww",
+      image:
+        "https://plus.unsplash.com/premium_photo-1679513691474-73102089c117?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aGVhZHBob25lfGVufDB8fDB8fHww",
       handler: async (response) => {
         try {
           const res = await axios.post(

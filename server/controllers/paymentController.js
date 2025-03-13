@@ -1,14 +1,19 @@
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
+require("dotenv").config();
 const User = require("../models/User");
 const Product = require("../models/Product");
 const Order = require("../models/Order");
-const { validatePaymentVerification } = require("razorpay/dist/utils/razorpay-utils");
+
+const {
+  validatePaymentVerification,
+} = require("razorpay/dist/utils/razorpay-utils");
 
 const instance = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
+
 
 const generatePayment = async (req, res) => {
   const userId = req.id;
@@ -23,21 +28,30 @@ const generatePayment = async (req, res) => {
       });
     }
 
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
-    }
-
     const options = {
-      amount: amount, 
+      amount: amount,
       currency: "INR",
       receipt: Math.random().toString(36).substring(2),
     };
 
-    const order = await instance.orders.create(options); // Use promise-based call
-    return res.status(200).json({
-      success: true,
-      data: { ...order, name: user.name },
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    instance.orders.create(options, async (err, order) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ sucess: false, message: err });
+      }
+
+      return res.status(200).json({
+        success: true,
+        data: { ...order, name: user.name },
+      });
     });
   } catch (error) {
     console.error("Generate Payment Error:", error);
@@ -52,56 +66,42 @@ const verifyPayment = async (req, res) => {
     const {
       razorpay_order_id,
       razorpay_payment_id,
-      razorpay_signature, // Add this to req.body
+      razorpay_signature,
       amount,
       productArray,
       address,
     } = req.body;
 
     // Generate expected signature
-    const generatedSignature = crypto
+    const signature = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
       .update(`${razorpay_order_id}|${razorpay_payment_id}`)
       .digest("hex");
 
-    // Verify signature
-    const isValid = generatedSignature === razorpay_signature;
-    if (!isValid) {
+    const validatePayment = validatePaymentVerification(
+      { order_id: razorpay_order_id, payment_id: razorpay_payment_id },
+      signature,
+      process.env.RAZORPAY_KEY_SECRET
+    );
+
+    if (!validatePayment){
       return res.status(400).json({
         success: false,
         message: "Invalid payment signature",
       });
     }
 
-    // Optional: Verify amount by fetching order details
-    const orderDetails = await instance.orders.fetch(razorpay_order_id);
-    if (orderDetails.amount !== amount * 100) {
-      return res.status(400).json({
-        success: false,
-        message: "Amount mismatch",
-      });
-    }
-
     // Check stock availability
     for (const product of productArray) {
-      const productDoc = await Product.findById(product.id);
-      if (!productDoc || productDoc.stock < product.quantity) {
-        return res.status(400).json({
-          success: false,
-          message: `Insufficient stock for product ${product.id}`,
-        });
-      }
-    }
-
-    // Update user purchases and product stock
-    for (const product of productArray) {
       await User.findByIdAndUpdate(
-        userId,
+        { _id: userId },
         { $push: { purchasedProducts: product.id } }
       );
-      await Product.findByIdAndUpdate(product.id, {
-        $inc: { stock: -product.quantity },
-      });
+
+      await Product.findByIdAndUpdate(
+        { _id: product.id },
+        { $inc: { stock: -product.quantity } }
+      );
     }
 
     // Create order
@@ -109,7 +109,7 @@ const verifyPayment = async (req, res) => {
       amount: amount, // Store in rupees
       razorpayOrderId: razorpay_order_id,
       razorpayPaymentID: razorpay_payment_id,
-      razorpaySignature: razorpay_signature,
+      razorpaySignature: signature,
       products: productArray,
       address: address,
       userId: userId,

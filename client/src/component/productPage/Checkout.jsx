@@ -50,16 +50,19 @@ const Checkout = () => {
 
     setIsLoading(true);
     try {
-      const amountInPaise = totalPrice * 100; // Convert rupees to paise
+     
+      const options = await generatePayment(totalPrice);
+      const success = verifyPayment(options, productArray, address);
+      console.log("Payment Options:", options);
+      console.log("Verifying Payment:", options, productArray, address);
 
-      const options = await generatePayment(amountInPaise);
-      if (options) {
-        await verifyPayment(options, productArray, address);
+      if (success) {
+        dispatch(emptyCart());
+        navigate("/success");
         toast("Order placed successfully!", {
           style: { backgroundColor: "green", color: "white" },
         });
-        dispatch(emptyCart());
-        navigate("/success");
+
       } else {
         toast("Failed to generate payment order", {
           style: {
@@ -68,6 +71,7 @@ const Checkout = () => {
             fontWeight: "bold",
           },
         });
+
       }
     } catch (error) {
       handleErrorLogout(error);
@@ -139,13 +143,13 @@ const Checkout = () => {
                 rows="7"
                 id="address"
                 placeholder="City, Area, Landmark and Pincode"
-                className="w-full"
+                className="w-full click:bg-zinc-800"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
             <Button
-              className="bg-orange-600 text-white"
+              className="bg-orange-600 text-white hover:bg-black"
               onClick={handleCheckout}
               disabled={isLoading}
             >

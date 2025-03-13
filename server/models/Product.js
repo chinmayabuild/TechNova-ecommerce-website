@@ -35,7 +35,7 @@ const productSchema = new mongoose.Schema(
     ],
     colors: {
       type: Array,
-      required: true,
+      required: false,
     },
     blacklisted: {
       type: Boolean,
