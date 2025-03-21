@@ -4,7 +4,6 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const { readdirSync } = require("fs");
 const { connectDb } = require("./db/connection");
-
 // Load environment variables
 dotenv.config();
 
@@ -15,7 +14,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Handle CORS
-app.use(cors({ origin: process.env.CLIENT_URL }));
+app.use(cors({ origin: process.env.CLIENT_URL}));
 
 // Middleware to parse JSON
 app.use(express.json());

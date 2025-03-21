@@ -51,7 +51,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-100 dark:bg-zinc-900 py-8 sm:py-12 mt-10">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 flex justify-center">
         {/* Main Footer Sections */}
         <div className="sm:flex sm:flex-wrap sm:-mx-4 md:py-4 gap-y-8">
           {footerSections.map((section) => (
