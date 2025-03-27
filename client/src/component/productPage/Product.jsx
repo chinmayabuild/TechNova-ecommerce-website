@@ -235,7 +235,7 @@ const Product = () => {
 
               <Button
                 onClick={handleAddToCart}
-                className="w-full bg-[#A6121E] text-white hover:bg-white  hover:text-black transition-colors duration-300"
+                className="w-full bg-[#D9190E] text-white hover:bg-white  hover:text-black transition-colors duration-300"
               >
                 Add to Cart
               </Button>

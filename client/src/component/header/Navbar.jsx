@@ -12,7 +12,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 flex justify-between items-center max-sm:px-6 px-14 py-5 border-b dark:bg-zinc-900 bg-white z-50">
+    <nav className="sticky top-0 flex justify-between mb-1 items-center max-sm:px-6 px-14 py-4 border-b dark:bg-zinc-900 bg-white z-50">
       {/* Left Section: Mobile Menu and Desktop Links */}
       <div className="flex items-center">
         {/* Mobile Menu Icon and Sidebar */}
@@ -65,7 +65,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Nav Links */}
-        <ul className="hidden sm:flex gap-3 text-m justify-center  items-center">
+        <ul className="hidden sm:flex gap-5 text-m justify-center  items-center">
           {isAuthenticated ? (
             <LogoutToggle user={user} />
           ) : (
@@ -98,7 +98,7 @@ const Navbar = () => {
           <img
             src={logo}
             alt="Sonix"
-            className="h-12 w-35 sm:h-18 sm:w-35 md:h-12 md:w-30 lg:h-20 lg:w-30 object-contain"
+            className="h-12 w-35 sm:h-18 sm:w-35 md:h-12 md:w-30 lg:h-20 lg:w-28 object-contain"
           />{" "}
         </Link>
       </div>

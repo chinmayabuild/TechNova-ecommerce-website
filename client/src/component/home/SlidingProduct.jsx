@@ -7,8 +7,18 @@ import "../style/slider.css";
 
 const products = [
   { id: 1, image: heroBanner, model: "Model No - Sonix Blue 242", price: 3499 },
-  { id: 2, image: heroBanner2, model: "Model No - Sonix Black 243", price: 5499 },
-  { id: 3, image: heroBanner3, model: "Model No - Sonix Rose 244", price: 2345 },
+  {
+    id: 2,
+    image: heroBanner2,
+    model: "Model No - Sonix Black 243",
+    price: 5499,
+  },
+  {
+    id: 3,
+    image: heroBanner3,
+    model: "Model No - Sonix Rose 244",
+    price: 2345,
+  },
 ];
 
 const SlidingProduct = () => {
@@ -19,18 +29,20 @@ const SlidingProduct = () => {
   };
 
   const goToPrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + products.length) % products.length);
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + products.length) % products.length
+    );
   };
 
   return (
-    <div className="relative flex flex-col items-center  mt-9 lg:h-[85vh] sm:h-[38vh]  overflow-hidden bg-[#A6121E] mx-auto w-[95vw] justify-center">
+    <div className="relative flex flex-col items-center  lg:h-[85vh] sm:h-[38vh] mt-2 overflow-hidden bg-[#D9190E] mx-auto w-[95vw] justify-center">
       {/* Header */}
       <div className="text-center  sm:mb-3">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white ">
-          Beats Others Model
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#ea9e34] font-[Acumin-Pro] ">
+          BEATS OTHER MODELS
         </h1>
-        <p className="typewriter-animation text-sm sm:text-xsm md:text-lg text-gray-400   relative mx-auto text-center px-4">
-          Sonix Beats is one of the most popular headphones makers in the world.
+        <p className="typewriter-animation text-sm sm:text-xs md:text-lg text-gray-400 relative mx-auto text-center px-4 font-[Acumin-Pro]">
+          Sonix Beats is one of the most popular headphone makers in the world.
         </p>
       </div>
       <h2 className="text-base sm:text-lg md:text-xl mb-4 font-semibold text-white">
@@ -42,7 +54,8 @@ const SlidingProduct = () => {
         {products.map((headphone, index) => {
           const isActive = index === currentIndex;
           const isNext = index === (currentIndex + 1) % products.length;
-          const isPrevious = index === (currentIndex - 1 + products.length) % products.length;
+          const isPrevious =
+            index === (currentIndex - 1 + products.length) % products.length;
 
           return (
             <div
@@ -70,7 +83,9 @@ const SlidingProduct = () => {
 
       {/* Model & Price */}
       <div className="text-center mt-2 text-white sm:mt-2">
-        <p className="text-sm sm:text-lg">Price - ₹{products[currentIndex].price}</p>
+        <p className="text-sm sm:text-lg">
+          Price - ₹{products[currentIndex].price}
+        </p>
       </div>
 
       {/* Navigation Buttons */}
