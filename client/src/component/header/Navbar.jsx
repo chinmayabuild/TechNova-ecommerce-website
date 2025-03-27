@@ -5,6 +5,7 @@ import CartDrawer from "./CartDrawer";
 import { User, Menu } from "lucide-react";
 import LogoutToggle from "./LogoutToggle";
 import { useSelector } from "react-redux";
+import logo from "../../../assets/logo.png";
 
 const Navbar = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -19,11 +20,11 @@ const Navbar = () => {
           <Menu
             size={28}
             strokeWidth={1.4}
-            className="text-[#e9660d] cursor-pointer"
+            className=" cursor-pointer"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           />
           {isMenuOpen && (
-            <ul className="absolute top-16 left-0 w-48 bg-white dark:bg-zinc-900 border-r border-b p-4 flex flex-col gap-3 text-[#e9660d] z-50 hover:scale-105 transition-all ease-in-out">
+            <ul className="absolute top-16 left-0 w-48 bg-white dark:bg-zinc-900 border-r border-b p-4 flex flex-col gap-3 z-50 hover:scale-105 transition-all ease-in-out">
               {isAuthenticated ? (
                 <>
                   <li>
@@ -64,7 +65,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Nav Links */}
-        <ul className="hidden sm:flex gap-3 text-m justify-center text-[#e9660d] items-center">
+        <ul className="hidden sm:flex gap-3 text-m justify-center  items-center">
           {isAuthenticated ? (
             <LogoutToggle user={user} />
           ) : (
@@ -94,12 +95,16 @@ const Navbar = () => {
       {/* Center Section: Logo */}
       <div className="absolute left-1/2 transform -translate-x-1/2">
         <Link to="/" className="text-3xl  sm:text-2xl font-semibold">
-          Sonix Store
+          <img
+            src={logo}
+            alt="Sonix"
+            className="h-12 w-35 sm:h-18 sm:w-35 md:h-12 md:w-30 lg:h-20 lg:w-30 object-contain"
+          />{" "}
         </Link>
       </div>
 
       {/* Right Section: ModeToggle and CartDrawer */}
-      <div className="flex gap-3 justify-center items-center text-[#e9660d]">
+      <div className="flex gap-3 justify-center items-center bg-none">
         <ModeToggle />
         <CartDrawer />
       </div>

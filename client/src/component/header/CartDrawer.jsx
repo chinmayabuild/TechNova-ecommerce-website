@@ -21,7 +21,6 @@ const CartDrawer = () => {
   const { cartItems, totalQuantity, totalPrice } = useSelector(
     (state) => state.cart
   );
-  console.log("CartDrawer Retrieved from cartSlice:", cartItems); // Log here
 
   return (
     <Drawer>
@@ -30,7 +29,7 @@ const CartDrawer = () => {
           <Badge className="absolute px-1 py-0">{totalQuantity}</Badge>
         )}
         <ShoppingCart
-          className="text-[#e9660d] hover:scale-105 transition-all ease-in-out cursor-pointer"
+          className=" hover:scale-105 transition-all ease-in-out cursor-pointer"
           strokeWidth={1.3}
           size={28}
         />
@@ -43,7 +42,7 @@ const CartDrawer = () => {
           </DrawerDescription>
         </DrawerHeader>
 
-        <div className="flex flex-col sm:flex-row justify-start gap-3 h-[70vh] overflow-y-scroll sm:overflow-hidden sm:h-auto mx-3">
+        <div className="flex flex-col sm:flex-row justify-start gap-3 h-[70vh]  overflow-y-scroll sm:overflow-hidden sm:h-auto mx-3">
           {cartItems.length === 0 ? (
             <h2 className="text-primary text-3xl">Your Cart is Empty...</h2>
           ) : (

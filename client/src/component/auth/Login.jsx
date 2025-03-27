@@ -66,7 +66,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-[50vh] lg:w-[25vw] mx-auto my-32 grid gap-10">
+    <div className="w-[40vh] lg:w-[25vw] mx-auto my-32 grid gap-10">
       <h1 className="text-2xl font-bold">Login into your Account</h1>
       <form className="grid gap-3" onSubmit={handleSubmit}>
         <Input placeholder="Enter Your Email" type="email" name="email" />

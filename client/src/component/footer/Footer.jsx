@@ -50,8 +50,8 @@ const Footer = () => {
   );
 
   return (
-    <footer className="bg-gray-100 dark:bg-zinc-900 py-8 sm:py-12 mt-10">
-      <div className="container mx-auto px-4">
+    <footer className="bg-gray-100 dark:bg-zinc-900 py-8 sm:py-12 mt-10 lg:pl-12 items-center ">
+      <div className="container mx-auto px-4  ">
         {/* Main Footer Sections */}
         <div className="sm:flex sm:flex-wrap sm:-mx-4 md:py-4 gap-y-8">
           {footerSections.map((section) => (
@@ -59,7 +59,7 @@ const Footer = () => {
               key={section.title}
               className="px-4 sm:w-1/2 md:w-1/4 xl:w-1/6  "
             >
-              <h5 className="text-xl font-bold mb-6 dark:text-[#e9660d] ">
+              <h5 className="text-xl font-bold mb-6 dark:text-[#A6121E] ">
                 {section.title}
               </h5>
               <ul className="list-none">
@@ -80,7 +80,7 @@ const Footer = () => {
                 <a
                   key={index}
                   href={href}
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-gray-600 dark:text-[#e9660d] hover:text-gray-800 dark:hover:text-white transition-colors"
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-gray-600 dark:text-[#A6121E] hover:text-gray-800 dark:hover:text-white transition-colors"
                 >
                   <Icon size={20} />
                 </a>

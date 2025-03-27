@@ -70,7 +70,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="w-[50vh] lg:w-[25vw] mx-auto my-10 grid gap-10">
+    <div className="w-[40vh] lg:w-[25vw] mx-auto my-10 grid gap-10">
       <h1 className="text-2xl font-bold">Register your Account</h1>
       <form className="grid gap-6" onSubmit={handleSubmit}>
         <Input placeholder="Enter Your Name" type="text" name="name" autoComplete="name" />

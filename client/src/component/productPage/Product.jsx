@@ -103,7 +103,7 @@ const Product = () => {
 
   return (
     <div className="">
-      <main className="w-[93vw] lg:w-[70vw] flex flex-col sm:flex-row justify-start items-start gap-10 mx-auto my-10">
+      <main className="w-[93vw] lg:w-[70vw] flex flex-col sm:flex-row justify-start items-start gap-10 mx-auto my-10 dark:bg-black bg-[#F8F7F2]">
         {/* Left side - Main Image */}
         <div className="grid sm:w-[50%] gap-3 ">
           <img
@@ -235,7 +235,7 @@ const Product = () => {
 
               <Button
                 onClick={handleAddToCart}
-                className="w-full bg-orange-600 text-white hover:bg-orange-700 hover:text-gray-100 transition-colors duration-300"
+                className="w-full bg-[#A6121E] text-white hover:bg-white  hover:text-black transition-colors duration-300"
               >
                 Add to Cart
               </Button>

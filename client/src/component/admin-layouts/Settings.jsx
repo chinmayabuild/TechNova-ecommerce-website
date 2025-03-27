@@ -56,7 +56,7 @@ const Settings = () => {
     const previousPassword = e.target.previousPassword.value.trim();
     const newPassword = e.target.newPassword.value.trim();
 
-    if (!previousPassword || !newPassword) { // Enhanced validation
+    if (!previousPassword || !newPassword) { 
       toast("Both previous and new passwords are required", {
         style: { backgroundColor: "red", color: "white", fontWeight: "bold" },
       });
