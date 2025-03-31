@@ -4,13 +4,13 @@ import FilterMenu from "./FilterMenu";
 import ProductList from "../productPage/ProductList";
 import SlidingProduct from "./SlidingProduct";
 import TestimonialSection from "./TEstimonial";
-import Category from "./Category";
+import ProductShowcase from "./ProductShowcase";
 
 const Home = () => {
   return (
     <>
       <HeaderDisplay />
-      <Category />
+      <ProductShowcase />
       <SlidingProduct />
       {/* <FilterMenu />
       <ProductList /> */}
