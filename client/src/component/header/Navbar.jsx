@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ModeToggle } from "./ModeToggle";
 import { Link } from "react-router-dom";
 import CartDrawer from "./CartDrawer";
@@ -10,9 +10,31 @@ import logo from "../../../assets/logo.png";
 const Navbar = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Effect to handle scroll behavior
+  useEffect(() => {
+    const handleScroll = () => {
+      // Apply blur effect when scrolled past 10px
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="sticky top-0 flex justify-between mb-1 items-center max-sm:px-6 px-14 py-4 border-b dark:bg-zinc-900 bg-white z-50">
+    <nav
+      className={`sticky top-0 flex justify-between mb-1 items-center max-sm:px-6 px-14 py-4 border-b z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white/30 dark:bg-zinc-900/30 backdrop-blur-md"
+          : "bg-white dark:bg-zinc-900"
+      }`}
+    >
       {/* Left Section: Mobile Menu and Desktop Links */}
       <div className="flex items-center">
         {/* Mobile Menu Icon and Sidebar */}
@@ -20,7 +42,7 @@ const Navbar = () => {
           <Menu
             size={28}
             strokeWidth={1.4}
-            className=" cursor-pointer"
+            className="cursor-pointer"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           />
           {isMenuOpen && (
@@ -65,7 +87,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Nav Links */}
-        <ul className="hidden sm:flex gap-5 text-m justify-center  items-center">
+        <ul className="hidden sm:flex gap-5 text-m justify-center items-center">
           {isAuthenticated ? (
             <LogoutToggle user={user} />
           ) : (
@@ -94,12 +116,12 @@ const Navbar = () => {
 
       {/* Center Section: Logo */}
       <div className="absolute left-1/2 transform -translate-x-1/2">
-        <Link to="/" className="text-3xl  sm:text-2xl font-semibold">
+        <Link to="/" className="text-3xl sm:text-2xl font-semibold">
           <img
             src={logo}
             alt="Sonix"
-            className="h-12 w-35 sm:h-18 sm:w-35 md:h-12 md:w-30 lg:h-20 lg:w-28 object-contain"
-          />{" "}
+            className="h-12 w-35 sm:h-18 sm:w-35 md:h-12 md:w-30 lg:h-_ATTRIBUTE20 lg:w-28 object-contain"
+          />
         </Link>
       </div>
 

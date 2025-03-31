@@ -95,7 +95,7 @@ const deleteProduct = async (req, res) => {
       message: "Product deleted Successfully",
     });
   } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message }); // if any error occurs during the process , send a 500 status code with the error message
   }
 };
 

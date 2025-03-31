@@ -44,7 +44,7 @@ const HeaderDisplay = () => {
   };
 
   return (
-    <div className="relative mx-auto w-[95vw] overflow-hidden">
+    <div className="relative mx-auto w-[95vw] overflow-hidden rounded-b-xl">
       <Carousel className="w-full">
         <CarouselContent
           style={{

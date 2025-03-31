@@ -33,7 +33,7 @@ const Review = () => {
           min="1"
           className="mb-4 w-[10rem]  "
         />
-        <Button className=" bg-[#A6121E] text-white">Submit review</Button>
+        <Button className=" bg-[#A6121E] text-white  hover:text-black">Submit review</Button>
       </div>
 
       {/* Reviws list  */}
