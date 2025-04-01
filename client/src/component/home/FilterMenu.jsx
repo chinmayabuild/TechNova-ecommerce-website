@@ -67,7 +67,6 @@ const FilterMenu = () => {
         setLoading(false); // Set loading to false when fetch completes
       }
     };
-
     const debounceTimer = setTimeout(() => {
       getFilterProducts();
     }, 300);
