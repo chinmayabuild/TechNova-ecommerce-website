@@ -10,8 +10,9 @@ const Home = () => {
   return (
     <>
       <HeaderDisplay />
-      <ProductShowcase />
+      
       <SlidingProduct />
+      <ProductShowcase />
       {/* <FilterMenu />
       <ProductList /> */}
       <Testimonial />
