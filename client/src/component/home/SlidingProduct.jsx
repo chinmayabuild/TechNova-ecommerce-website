@@ -35,7 +35,7 @@ const SlidingProduct = () => {
   };
 
   return (
-    <div className="relative flex flex-col items-center  lg:h-[85vh] sm:h-[38vh] mt- overflow-hidden dark:bg-[#1D1D1D] mx-auto w-[95vw] justify-center rounded-xl">
+    <div className="relative flex flex-col items-center mt-10 lg:h-[85vh] sm:h-[38vh] mt- overflow-hidden dark:bg-[#1D1D1D] mx-auto w-[95vw] justify-center rounded-xl">
       {/* Header */}
       <div className="text-center  sm:mb-3">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#D9190E] font-[Acumin-Pro] ">
